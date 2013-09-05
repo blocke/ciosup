@@ -8,7 +8,7 @@ to push it all to the switch.
 
 CIOSUP requires the following Python modules:
 
-pexpect>= 2.4
+pexpect>=2.4
 PyYAML>=3.10
 pyserial>=2.6
 

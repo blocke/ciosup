@@ -82,7 +82,7 @@ class CIOSProvision:
                 sys.stdout.flush()
                 # Five minutes of trying (10 * 30)
                 if timeout_tries > 30:
-                    raise CIOSProvisionException("Timeout after three minutes.  Check switch and serial link.\n{0}".format(self.switch.before))
+                    raise CIOSProvisionException("Timeout after five minutes.  Check switch and serial link.\n{0}".format(self.switch.before))
                 timeout_tries += 1
 
         # Newline after waiting finishes
