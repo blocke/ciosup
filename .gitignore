@@ -1,0 +1,5 @@
+ciosup-env/
+*.pyc
+*.swp
+camp*.yml
+res*.yml

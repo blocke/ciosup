@@ -1,0 +1,23 @@
+
+CIOSUP is a quick and dirty script to apply a basic configuration to
+a newly unboxed Cisco switch using the serial console.
+
+Create a YAML based configuration file containing the required
+commands to be sent to the switch and use the 'ciosup' command
+to push it all to the switch.
+
+CIOSUP requires the following Python modules:
+
+pexpect>= 2.4
+PyYAML>=3.10
+pyserial>=2.6
+
+It has been tested on Mac OS X 10.8 system with a Prolific-based
+USB to serial adapter.  You will need to make sure the file 
+permissions of the /dev file for your serial device allow you to
+read and write to the serial device.
+
+Note that this script does not do any validation of the YAML file.
+If you mess up the formatting you will see Python exceptions
+involving dictionary key errors.
+

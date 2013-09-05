@@ -1,0 +1,29 @@
+#!/usr/bin/env python2.7
+
+import argparse
+import CIOS
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Performs initial configuration of Cisco switches over serial')
+    parser.add_argument('hostname', help='Hostname for new switch')
+    parser.add_argument('IPv4_address', help='IPv4 address for new switch')
+    parser.add_argument('-s', '--serial', metavar='serial_file', help='Full path to /dev char file for serial device', dest='serial_file')
+    parser.add_argument('-c', '--config', metavar='conf_file', help='Configuration file (default: ciosup.ini in current directory)', dest='conf_file')
+
+    return parser.parse_args()
+
+
+def main():
+
+    args = vars(parse_args())
+
+    try:
+        target = CIOS.CIOSProvision(args['hostname'], args['IPv4_address'], args.get('conf_file'))
+        target.provision()
+    except CIOS.CIOSProvisionException as e:
+        print("\n[X] {0}\n".format(e.value))
+
+    print("\n[*] Finished.\n")
+
+if __name__ == '__main__':
+    main()

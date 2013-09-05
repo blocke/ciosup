@@ -1,0 +1,77 @@
+---
+
+management interface:
+  interface: vlan 50
+  netmask: 255.255.255.0
+
+serial:
+  port: /dev/tty.PL2303-0000101D
+  baud: 9600
+  bits: 8
+  parity: N
+
+commands:
+    global:
+      - vtp version 2
+      - vtp mode client
+      - vtp domain derp
+      - vtp password koolaid
+      - ip default-gateway 192.168.1.1
+      - no logging console
+      - snmp-server enable traps config
+      - snmp-server enable traps copy-config
+      - snmp-server enable traps flash insertion removal
+      - snmp-server enable traps bridge
+      - snmp-server enable traps stpx
+      - snmp-server enable traps vtp
+      - snmp-server enable traps port-security
+      - snmp-server enable traps envmon fan shutdown supply temperature status
+      - service timestamps debug uptime
+      - service timestamps log datetime localtime
+      - service password-encryption
+      - service tcp-keepalives-in
+      - service tcp-keepalives-out
+      - clock summer-time EDT recurring 2 Sun Mar 2:00 1 Sun Nov 2:00
+      - clock timezone Eastern -5
+      - errdisable recovery cause bpduguard
+      - errdisable recovery cause link-flap
+    finish:
+      - crypto key generate rsa general-keys modulus 1024
+
+    interfaces:
+      range Gi1/0/1-47:
+        - switchport access vlan 20
+        - switchport mode access
+        - storm-control broadcast level 10.00
+        - storm-control multicast level 60.00
+        - storm-control unicast level 80.00
+        - spanning-tree portfast
+        - spanning-tree bpduguard enable
+        - ip dhcp snooping limit rate 10
+
+      Gi1/0/48:
+        - switchport mode trunk
+        - switchport trunk native vlan 50
+        - ip dhcp snooping trust
+
+      range Gi1/0/49-52:
+        - shut
+
+      vlan 50:
+        - no shut
+
+      vlan 1:
+        - no ip address
+        - no ip route-cache
+        - shut
+
+    lines:
+      vty 0 4:
+        - session-timeout 900
+        - transport input ssh
+      vty 5 15:
+        - session-timeout 900
+        - transport input ssh
+      con 0:
+        - session-timeout 900
+
